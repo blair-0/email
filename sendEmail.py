@@ -34,14 +34,16 @@ for addr in mail_lists:
     toaddrs.append(addr)
     if len(toaddrs) < 10:
         continue
-    if  len(toaddrs) == 10:
+    if len(toaddrs) == 10:
         msg['To'] = ",".join(toaddrs)
         with smtplib.SMTP('smtp.dot618.com',587) as server:
             server.starttls()
             server.login('yzh@dot618.com', 'slee@1092')
             server.sendmail(fromaddr, toaddrs, msg.as_string())
         toaddrs.clear()
-    sleep(random.randrange(60, 600))
+        # 如果不删除则每次都会追加
+        del msg['To']
+        sleep(random.randrange(60, 600))
 if toaddrs:
     msg['To'] = ",".join(toaddrs)
     with smtplib.SMTP('smtp.dot618.com', 587) as server:
