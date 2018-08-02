@@ -6,14 +6,16 @@
 # @File     : sendEmail.py
 # @Software : PyCharm
 
-import smtplib, random
+import smtplib, random, sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from time import sleep
 
-fromaddr = 'support@uniex.one'
-with open('/home/ec2-user/mail_lists/mail_163_20180730') as f:
+mail_lists_file = sys.argv[1]
+with open(mail_lists_file) as f:
     mail_lists = f.read().splitlines()
+
+fromaddr = 'support@uniex.one'
 toaddrs = []
 msg = MIMEMultipart('alternative')
 msg['Subject'] = '邮件订阅回执'
@@ -36,7 +38,7 @@ for addr in mail_lists:
         continue
     if len(toaddrs) == 10:
         msg['To'] = ",".join(toaddrs)
-        with smtplib.SMTP('smtp.dot618.com',587) as server:
+        with smtplib.SMTP('smtp.dot618.com', 587) as server:
             server.starttls()
             server.login('yzh@dot618.com', 'slee@1092')
             server.sendmail(fromaddr, toaddrs, msg.as_string())
