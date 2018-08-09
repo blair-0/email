@@ -5,7 +5,10 @@
 # @Email    : you_zhihong@aliyun.com
 # @File     : sendEmail.py
 # @Software : PyCharm
-
+"""
+向指定邮件列表文件发送邮件
+Usage: ./script mail_list.txt
+"""
 import smtplib, random, sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -45,7 +48,7 @@ for addr in mail_lists:
         toaddrs.clear()
         # 如果不删除则每次都会追加
         del msg['To']
-        sleep(random.randrange(60, 600))
+        sleep(random.randrange(120, 600))
 if toaddrs:
     msg['To'] = ",".join(toaddrs)
     with smtplib.SMTP('smtp.dot618.com', 587) as server:
