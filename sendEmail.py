@@ -48,6 +48,7 @@ for addr in mail_lists:
         toaddrs.clear()
         # 如果不删除则每次都会追加
         del msg['To']
+        # 每次发送间隔时间为2-10分钟（163每天限制发送1000封左右）
         sleep(random.randrange(120, 600))
 if toaddrs:
     msg['To'] = ",".join(toaddrs)
